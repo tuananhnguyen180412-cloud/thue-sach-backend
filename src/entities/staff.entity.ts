@@ -5,18 +5,18 @@ export class Staff {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  staffCode: string; // Mã NV (VD: NV-01)
+  @Column({ default: '' })
+  staffCode: string; // Mã NV, backend tự sinh nếu không gửi
 
   @Column()
-  fullName: string;  // Họ tên
+  fullName: string;
+
+  @Column({ default: 'Nhân viên' })
+  position: string;
 
   @Column()
-  position: string;  // Chức vụ (VD: Quản lý, Nhân viên vận hành)
-
-  @Column()
-  email: string;     // Email liên hệ
+  email: string;
 
   @Column({ default: 'Đang hoạt động' })
-  status: string;    // Trạng thái: Đang hoạt động, Tạm khóa
+  status: string;
 }

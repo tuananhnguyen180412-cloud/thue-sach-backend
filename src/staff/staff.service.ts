@@ -15,11 +15,16 @@ export class StaffService {
   }
 
   async create(staffData: Partial<Staff>): Promise<Staff> {
-    const newStaff = this.staffRepository.create(staffData);
+    const newStaff = this.staffRepository.create({
+      ...staffData,
+      // Tự sinh mã nhân viên nếu frontend không gửi, ví dụ NV-483920
+      staffCode: staffData.staffCode || `NV-${Date.now().toString().slice(-6)}`,
+      position: staffData.position || 'Nhân viên',
+      status: staffData.status || 'Đang hoạt động',
+    });
     return await this.staffRepository.save(newStaff);
   }
 
-  // Thêm hàm update ở đây
   async update(id: number, staffData: Partial<Staff>): Promise<Staff> {
     await this.staffRepository.update(id, staffData);
     const updatedStaff = await this.staffRepository.findOneBy({ id });
